@@ -1,0 +1,244 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para María - Regalo Final</title>
+    <style>
+        body {
+            margin: 0; padding: 0;
+            display: flex; justify-content: center; align-items: center;
+            height: 100vh;
+            background-color: #0c0d00;
+            font-family: 'Dancing Script', serif;
+            overflow: hidden;
+            touch-action: manipulation;
+        }
+
+        /* MARCO DE FLORES ADAPTABLE */
+        .flower-frame {
+            position: fixed; width: 100%; height: 40px;
+            left: 0; z-index: 100;
+            display: flex; justify-content: center; gap: 5px;
+            overflow: hidden;
+        }
+        .frame-top { top: 5px; }
+        .frame-bottom { bottom: 5px; }
+
+        .frame-item {
+            width: 25px; height: 25px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            flex-shrink: 0;
+        }
+
+        .container {
+            width: 95%; max-width: 900px; height: 85vh;
+            position: relative;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+
+        /* BOTÓN DE INICIO (Girasol) */
+        #initial-sunflower {
+            position: absolute; text-align: center; z-index: 100;
+            transition: all 0.8s ease;
+            cursor: pointer;
+            width: 100%;
+        }
+        #initial-sunflower img { 
+            width: 140px; 
+            filter: drop-shadow(0 0 15px rgba(255, 255, 0, 0.4));
+            transition: transform 0.3s ease;
+        }
+        #initial-sunflower img:active { transform: scale(0.9); }
+        
+        #initial-sunflower p { 
+            color: #FFFF00; 
+            font-size: 1.5rem; 
+            font-weight: bold; 
+            text-shadow: 0 0 10px rgba(255,255,0,0.6);
+            margin-top: 15px;
+        }
+
+        /* RAMO.PNG ADAPTABLE */
+        #ramo-container {
+            position: absolute;
+            width: 220px;
+            opacity: 0;
+            transition: all 2s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 10;
+        }
+        #ramo-container img { width: 100%; height: auto; }
+
+        /* PANEL DE TEXTO */
+        #text-panel {
+            position: absolute; 
+            width: 90%;
+            opacity: 0; transition: opacity 1s;
+            text-align: center;
+            z-index: 5;
+            top: 62%;
+        }
+
+        .typewriter { 
+            color: #FFFF00; 
+            font-size: 1.2rem; 
+            margin-bottom: 8px; 
+            font-weight: bold; 
+            line-height: 1.3;
+            text-shadow: 0 0 8px rgba(255,255,0,0.4);
+        }
+        .counter { 
+            color: #eee; 
+            font-size: 0.9rem; 
+            border-top: 1px solid #FFFF00; 
+            padding-top: 12px; 
+            margin-top: 15px; 
+        }
+        #timer { color: #FFD700; font-weight: bold; display: block; margin-top: 5px; }
+
+        /* AJUSTES PARA COMPUTADORA */
+        @media (min-width: 768px) {
+            #ramo-container { width: 320px; }
+            #text-panel { 
+                text-align: left; 
+                width: 45%; 
+                left: 5%; 
+                top: auto; 
+            }
+            .typewriter { font-size: 1.5rem; }
+            #initial-sunflower p { font-size: 2.2rem; }
+            #initial-sunflower img { width: 180px; }
+            .frame-item { width: 35px; height: 35px; }
+        }
+
+        /* AVISO MÚSICA */
+        #music-hint {
+            position: absolute; bottom: -40px; width: 100%;
+            color: #FFFF00; font-size: 0.9rem; font-style: italic;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.4; } 50% { opacity: 1; } 100% { opacity: 0.4; }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="miMusica" loop>
+        <source src="musica.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="frame-top" class="flower-frame frame-top"></div>
+    <div id="frame-bottom" class="flower-frame frame-bottom"></div>
+
+    <div class="container">
+        <div id="initial-sunflower" onclick="empezarRegalo()">
+            <img src="Girasol.png" alt="Tócame">
+            <p>Flores Amarillas Para Mi Mejor Amiga</p>
+            <div id="music-hint">🌻 Toca el girasol para empezar 🌻</div>
+        </div>
+
+        <div id="ramo-container">
+            <img src="ramo.png" alt="Ramo">
+        </div>
+
+        <div id="text-panel">
+            <div id="line1" class="typewriter" style="font-size: 1.8rem;"></div>
+            <div id="line2" class="typewriter"></div>
+            <div id="line3" class="typewriter" style="color: #FFD700;"></div>
+            <div class="counter">
+                Nuestra amistad comenzó hace...
+                <span id="timer"></span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const fechaInicio = new Date(2023, 2, 23, 22, 40, 0);
+
+        function createFrames() {
+            const top = document.getElementById('frame-top');
+            const bottom = document.getElementById('frame-bottom');
+            const count = window.innerWidth < 768 ? 12 : 25;
+            for(let i=0; i<count; i++) {
+                const f1 = document.createElement('div');
+                f1.className = 'frame-item';
+                f1.style.backgroundImage = i % 2 === 0 ? "url('Girasol.png')" : "url('flor.png')";
+                top.appendChild(f1);
+
+                const f2 = document.createElement('div');
+                f2.className = 'frame-item';
+                f2.style.backgroundImage = i % 2 !== 0 ? "url('Girasol.png')" : "url('flor.png')";
+                bottom.appendChild(f2);
+            }
+        }
+
+        function empezarRegalo() {
+            // Activa música
+            const audio = document.getElementById('miMusica');
+            audio.play().catch(e => console.log("Error con audio:", e));
+
+            const sunflower = document.getElementById('initial-sunflower');
+            const ramo = document.getElementById('ramo-container');
+            const textPanel = document.getElementById('text-panel');
+
+            // Desaparece botón inicial
+            sunflower.style.opacity = '0';
+            
+            setTimeout(() => {
+                sunflower.style.display = 'none';
+                ramo.style.opacity = '1';
+
+                setTimeout(() => {
+                    // Animación según pantalla
+                    if (window.innerWidth < 768) {
+                        ramo.style.transform = 'translateY(-140px) scale(0.8)';
+                    } else {
+                        ramo.style.transform = 'translateX(240px) scale(0.85)';
+                    }
+
+                    setTimeout(() => {
+                        textPanel.style.opacity = '1';
+                        typeEffect('line1', "Maria Alejandra Tarache", () => {
+                            typeEffect('line2', "Flores amarillas para la persona que conoce todas mis historias y aun así decidió quedarse a mi lado. Gracias por ser mi apoyo incondicional y por hacer que cada día sea un poco más brillante. Eres, sin duda, mi persona favorita.", () => {
+                                typeEffect('line3', "I love you! 💛");
+                            });
+                        });
+                    }, 2000);
+                }, 3000);
+            }, 800);
+        }
+
+        function typeEffect(id, text, cb) {
+            let i = 0;
+            const el = document.getElementById(id);
+            const t = setInterval(() => {
+                el.innerHTML = text.substring(0, i);
+                i++;
+                if (i > text.length) { clearInterval(t); if(cb) cb(); }
+            }, 55);
+        }
+
+        function updateTimer() {
+            const ahora = new Date();
+            let anios = ahora.getFullYear() - fechaInicio.getFullYear();
+            let meses = ahora.getMonth() - fechaInicio.getMonth();
+            let dias = ahora.getDate() - fechaInicio.getDate();
+            if (dias < 0) { meses--; const uM = new Date(ahora.getFullYear(), ahora.getMonth(), 0); dias += uM.getDate(); }
+            if (meses < 0) { anios--; meses += 12; }
+            const diff = ahora - fechaInicio;
+            const h = Math.floor((diff / 3600000) % 24);
+            const m = Math.floor((diff / 60000) % 60);
+            const s = Math.floor((diff / 1000) % 60);
+            document.getElementById('timer').innerText = `${anios} años, ${meses} meses, ${dias} días, ${h} horas ${m} min ${s} seg`;
+        }
+
+        window.onload = () => { 
+            createFrames();
+            setInterval(updateTimer, 1000); 
+            updateTimer();
+        };
+    </script>
+</body>
+</html>
