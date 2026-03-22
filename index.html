@@ -189,28 +189,28 @@
             // Desaparece botón inicial
             sunflower.style.opacity = '0';
             
-            setTimeout(() => {
+setTimeout(() => {
                 sunflower.style.display = 'none';
                 ramo.style.opacity = '1';
 
                 setTimeout(() => {
-                    // Animación según pantalla
-          if (window.innerWidth < 768) {
-    // EL RAMO: Sube y se achica un poco
-    ramo.style.transform = 'translateY(-190px) scale(0.65)';
-    
-    // EL TEXTO: Lo fijamos en el centro vertical
-    // Ajusta este 45% si quieres que el texto suba o baje más
-    textPanel.style.top = '45%'; 
-    
-    // IMPORTANTE: Forzamos que no se mueva a la derecha
-    textPanel.style.left = '5%'; 
-} else {
-    // Para computadora lo dejamos como estaba
-    ramo.style.transform = 'translateX(220px) scale(0.85)';
-    textPanel.style.left = '8%';
-}
-                    setTimeout(() => {
+                    // --- AJUSTE POSICIÓN FINAL ---
+                    if (window.innerWidth < 768) {
+                        // EN CELULAR: Solo movemos arriba/abajo (Y), nunca a los lados (X)
+                        ramo.style.transform = 'translateY(-180px) scale(0.7)';
+                        
+                        textPanel.style.left = '5%';    // Margen izquierdo fijo
+                        textPanel.style.width = '90%';  // Ancho casi total
+                        textPanel.style.top = '48%';    // Altura central
+                        textPanel.style.transform = 'none'; // <--- ESTO ELIMINA EL DESPLAZAMIENTO A LA DERECHA
+                    } else {
+                        // EN COMPUTADORA: Aquí sí lo movemos a la derecha
+                        ramo.style.transform = 'translateX(220px) scale(0.85)';
+                        textPanel.style.left = '8%';
+                        textPanel.style.width = '40%';
+                        textPanel.style.top = '30%';
+                    }
+                   setTimeout(() => {
                         textPanel.style.opacity = '1';
                         typeEffect('line1', "Maria Alejandra Tarache", () => {
                             typeEffect('line2', "Gracias por conocer mis historias y elegir quedarte. Eres mi apoyo incondicional y mi persona favorita. 🌻", () => {
