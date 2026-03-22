@@ -192,12 +192,15 @@
 
                 setTimeout(() => {
                     // Animación según pantalla
-                    if (window.innerWidth < 768) {
-                        ramo.style.transform = 'translateY(-140px) scale(0.8)';
+                  if (window.innerWidth < 768) {
+                        // AQUÍ ES DONDE SUBE EL RAMO (-220px es más arriba que -160px)
+                        ramo.style.transform = 'translateY(-220px) scale(0.7)';
+                        
+                        // AQUÍ ES DONDE EL TEXTO BAJA PARA NO CHOCAR (55% o 60%)
+                        textPanel.style.top = '55%'; 
                     } else {
-                        ramo.style.transform = 'translateX(240px) scale(0.85)';
+                        ramo.style.transform = 'translateX(220px) scale(0.85)';
                     }
-
                     setTimeout(() => {
                         textPanel.style.opacity = '1';
                         typeEffect('line1', "Maria Alejandra Tarache", () => {
