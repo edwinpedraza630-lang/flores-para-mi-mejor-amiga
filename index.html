@@ -75,14 +75,13 @@
     position: absolute;
     width: 90%;
     left: 50%;
-    transform: translateX(-50%); /* CENTRADO REAL */
+    top: 55%;
+    transform: translate(-50%, -50%); /* 🔥 CENTRADO PERFECTO X + Y */
     opacity: 0;
     transition: opacity 1s;
     text-align: center;
     z-index: 5;
-    top: 55%;
 }
-
         .typewriter { 
             color: #FFFF00; 
             font-size: 1.2rem; 
@@ -104,12 +103,12 @@
         /* AJUSTES PARA COMPUTADORA */
         @media (min-width: 768px) {
             #ramo-container { width: 320px; }
-           #text-panel { 
+          #text-panel { 
     text-align: left; 
     width: 45%; 
     left: 8%; 
-    transform: none; /* IMPORTANTE */
     top: 30%;
+    transform: none; 
 }
             .typewriter { font-size: 1.5rem; }
             #initial-sunflower p { font-size: 2.2rem; }
@@ -202,9 +201,9 @@ setTimeout(() => {
                         ramo.style.transform = 'translateY(-180px) scale(0.7)';
                         
 textPanel.style.left = '50%';
+textPanel.style.top = '50%';
 textPanel.style.width = '90%';
-textPanel.style.top = '48%';
-textPanel.style.transform = 'translateX(-50%)';// <--- ESTO ELIMINA EL DESPLAZAMIENTO A LA DERECHA
+textPanel.style.transform = 'translate(-50%, -50%)';
                     } else {
                         // EN COMPUTADORA: Aquí sí lo movemos a la derecha
                         ramo.style.transform = 'translateX(220px) scale(0.85)';
