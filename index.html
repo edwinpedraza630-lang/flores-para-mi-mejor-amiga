@@ -83,7 +83,8 @@
         .typewriter { 
             color: #FFFF00; 
             font-size: 1.2rem; 
-            margin-bottom: 8px; 
+            margin-bottom: 15px; /* Esto separa las frases para que no se vean amontonadas */
+         padding: 0 10px;
             font-weight: bold; 
             line-height: 1.3;
             text-shadow: 0 0 8px rgba(255,255,0,0.4);
@@ -192,15 +193,14 @@
 
                 setTimeout(() => {
                     // Animación según pantalla
-                  if (window.innerWidth < 768) {
-                        // AQUÍ ES DONDE SUBE EL RAMO (-220px es más arriba que -160px)
-                        ramo.style.transform = 'translateY(-250px) scale(0.7)';
-                        
-                        // AQUÍ ES DONDE EL TEXTO BAJA PARA NO CHOCAR (55% o 60%)
-                        textPanel.style.top = '30%'; 
-                    } else {
-                        ramo.style.transform = 'translateX(220px) scale(0.85)';
-                    }
+                 if (window.innerWidth < 768) {
+    // 1. EL RAMO: -180px lo baja un poquito del techo para que no se vea "pegado".
+    ramo.style.transform = 'translateY(-180px) scale(0.7)'; 
+    
+    // 2. EL TEXTO: Cambia el top a 40% o 45%. 
+    // Mientras MENOR sea el porcentaje, más SUBE el texto hacia el centro.
+    textPanel.style.top = '40%'; 
+}
                     setTimeout(() => {
                         textPanel.style.opacity = '1';
                         typeEffect('line1', "Maria Alejandra Tarache", () => {
