@@ -72,13 +72,14 @@
 
         /* PANEL DE TEXTO */
         #text-panel {
-            position: absolute; 
-            width: 90%;
-            opacity: 0; transition: opacity 1s;
-            text-align: center;
-            z-index: 5;
-            left: 50%;
-    transform: translateX(-50%); 
+    position: absolute;
+    width: 90%;
+    left: 5%; /* Esto lo centra horizontalmente (5% margen + 90% ancho + 5% margen) */
+    opacity: 0;
+    transition: opacity 1s;
+    text-align: center;
+    z-index: 5;
+    top: 55%; /* Posición inicial por si acaso */
 }
 
         .typewriter { 
@@ -194,15 +195,20 @@
 
                 setTimeout(() => {
                     // Animación según pantalla
-             if (window.innerWidth < 768) {
-    // 1. Subimos el ramo y lo hacemos un poco más pequeño para que no estorbe
-    ramo.style.transform = 'translateY(-190px) scale(0.65)'; 
-    ramo.style.zIndex = "1"; // El ramo queda atrás
+          if (window.innerWidth < 768) {
+    // EL RAMO: Sube y se achica un poco
+    ramo.style.transform = 'translateY(-190px) scale(0.65)';
     
-    // 2. Posicionamos el panel de texto en el centro exacto
-    textPanel.style.top = '50%'; 
-    textPanel.style.transform = 'translateY(-20%)'; // Esto lo centra perfecto respecto a su propio tamaño
-    textPanel.style.zIndex = "10"; // El texto queda adelante
+    // EL TEXTO: Lo fijamos en el centro vertical
+    // Ajusta este 45% si quieres que el texto suba o baje más
+    textPanel.style.top = '45%'; 
+    
+    // IMPORTANTE: Forzamos que no se mueva a la derecha
+    textPanel.style.left = '5%'; 
+} else {
+    // Para computadora lo dejamos como estaba
+    ramo.style.transform = 'translateX(220px) scale(0.85)';
+    textPanel.style.left = '8%';
 }
                     setTimeout(() => {
                         textPanel.style.opacity = '1';
